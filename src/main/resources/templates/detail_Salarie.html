@@ -17,7 +17,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li><a href="http://localhost:8080/salaries?page=0&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC" class="nav-link">Liste des salariés <span class="badge badge-primary">26</span></a></li>
+                <li><a href="http://localhost:8080/salaries/1" class="nav-link">Liste des salariés <span class="badge badge-primary" th:text="${nbSalaries}"></span></a></li>
             </ul>
 
             <form class="form-inline my-2 my-lg-0" role="search" action="http://localhost:8080/salaries" method="GET">
@@ -40,17 +40,17 @@
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="form-control-label" for="id">ID</label>
-                <input type="text" value="10" class="form-control" name="id" id="id" disabled="true">
+                <input type="text" th:value="${infoSalarie.id}" class="form-control" name="id" id="id" disabled="true">
 
                 <label class="form-control-label" for="nom">Nom</label>
-                <input type="text" value="Jean Dupont" class="form-control" name="nom" id="nom">
+                <input type="text" th:value="${infoSalarie.nom}" class="form-control" name="nom" id="nom">
 
                 <label class="form-control-label" for="moisEnCours">moisEnCours</label>
-                <input type="date" value="03/2023" class="form-control" name="moisEnCours"
+                <input type="date" th:value="${infoSalarie.moisEnCours}" class="form-control" name="moisEnCours"
                        id="moisEnCours">
 
                 <label class="form-control-label" for="moisDebutContrat">moisDebutContrat</label>
-                <input type="date" value="08/2022" class="form-control" name="moisDebutContrat" id="moisDebutContrat">
+                <input type="date" th:value="${infoSalarie.moisDebutContrat}" class="form-control" name="moisDebutContrat" id="moisDebutContrat">
             </div>
         </div>
 
@@ -60,7 +60,7 @@
                 <div>
                     <label class="form-control-label" for="joursTravaillesAnneeN">joursTravaillesAnneeN</label>
                     <div class="input-group">
-                        <input type="number" step="0.5" value="20" class="form-control" name="joursTravaillesAnneeN" id="joursTravaillesAnneeN">
+                        <input type="number" step="0.5" th:value="${infoSalarie.joursTravaillesAnneeNMoins1}" class="form-control" name="joursTravaillesAnneeN" id="joursTravaillesAnneeN">
                         <div class="input-group-append">
                             <span class="input-group-text">j</span>
                         </div>
@@ -70,7 +70,7 @@
                 <div>
                     <label class="form-control-label" for="congesPayesAcquisAnneeN">congesPayesAcquisAnneeN</label>
                     <div class="input-group">
-                        <input type="number" step="0.5" value="2.5" class="form-control" name="congesPayesAcquisAnneeN" id="congesPayesAcquisAnneeN">
+                        <input type="number" step="0.5" th:value="${infoSalarie.congesPayesAcquisAnneeNMoins1}" class="form-control" name="congesPayesAcquisAnneeN" id="congesPayesAcquisAnneeN">
                     <div class="input-group-append">
                         <span class="input-group-text">j</span>
                     </div>
