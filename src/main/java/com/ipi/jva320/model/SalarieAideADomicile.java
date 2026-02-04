@@ -217,8 +217,17 @@ public class SalarieAideADomicile {
     public void setMoisDebutContrat(LocalDate moisDebutContrat) {
         this.moisDebutContrat = moisDebutContrat;
     }
-    
 
+    private LocalDate moisFinContrat;
+    // getter
+    public LocalDate getMoisFinContrat() {
+        return moisFinContrat;
+    }
+
+    // setter
+    public void setMoisFinContrat(LocalDate moisFinContrat) {
+        this.moisFinContrat = moisFinContrat;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

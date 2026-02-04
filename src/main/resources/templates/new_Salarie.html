@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer un nouveau salarié</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Créer un nouveau salarié</h1>
+
+    <form th:action="@{/salaries/aide/save}" th:object="${salarie}" method="post">
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" th:field="*{nom}" class="form-control" id="nom" placeholder="Nom du salarié" required>
+        </div>
+
+        <div class="form-group">
+            <label for="moisDebutContrat">Date début contrat</label>
+            <input type="date" th:field="*{moisDebutContrat}" class="form-control" id="moisDebutContrat" required>
+        </div>
+
+        <div class="form-group">
+            <label for="moisFinContrat">Date fin contrat</label>
+            <input type="date" th:field="*{moisFinContrat}" class="form-control" id="moisFinContrat">
+        </div>
+
+        <div class="form-group">
+            <label for="congesPayesAcquisAnneeNMoins1">Congés acquis N-1</label>
+            <input type="number" th:field="*{congesPayesAcquisAnneeNMoins1}" class="form-control" id="congesPayesAcquisAnneeNMoins1">
+        </div>
+
+        <button type="submit" class="btn btn-success mt-2">Créer</button>
+        <a href="/salaries" class="btn btn-secondary mt-2">Annuler</a>
+    </form>
+
+
+</div>
+</body>
+</html>
