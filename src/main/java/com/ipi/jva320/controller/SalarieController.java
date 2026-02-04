@@ -14,56 +14,53 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Controller
+@RequestMapping("/salaries")
 public class SalarieController {
 
     @Autowired
     private SalarieAideADomicileService salarieAideADomicileService;
 
     // =======================
+    // LISTE DES SALARIÉS
+    // =======================
+    @GetMapping
+    public String listSalaries(ModelMap model,
+                               @RequestParam(value = "nom", required = false) String nom) {
+
+        if (nom != null && !nom.isBlank()) {
+            List<SalarieAideADomicile> salaries = salarieAideADomicileService.getSalaries(nom);
+            if (salaries.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Aucun salarié trouvé avec le nom : " + nom);
+            }
+            model.put("salaries", salaries); // passer la liste à la vue
+            model.put("nbSalaries", salaries.size());
+            return "list";
+        }
+
+        List<SalarieAideADomicile> salaries = salarieAideADomicileService.getSalaries();
+        model.put("salaries", salaries);
+        model.put("nbSalaries", salaries.size());
+        return "list";
+    }
+
+    // =======================
     // DÉTAIL SALARIÉ
     // =======================
-    @GetMapping("/salaries/{id}")
+    @GetMapping("/{id}")
     public String getDetailSalarie(@PathVariable Long id, ModelMap model) {
         SalarieAideADomicile salarie = salarieAideADomicileService.getSalarie(id);
-
         if (salarie == null) {
             return "redirect:/salaries";
         }
-
         model.put("salarie", salarie);
         return "detail_Salarie";
     }
 
     // =======================
-    // RECHERCHE PAR NOM
-    // =======================
-    @GetMapping("/salaries")
-    public String searchSalarie(
-            @RequestParam(value = "nom", required = false) String nom,
-            ModelMap model) {
-
-        if (nom != null && !nom.isBlank()) {
-            List<SalarieAideADomicile> salaries =
-                    salarieAideADomicileService.getSalaries(nom);
-
-            if (salaries.isEmpty()) {
-                throw new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Aucun salarié trouvé avec le nom : " + nom
-                );
-            }
-
-            model.put("salarie", salaries.get(0));
-            return "detail_Salarie";
-        }
-
-        return "redirect:/";
-    }
-
-    // =======================
     // FORMULAIRE CRÉATION
     // =======================
-    @GetMapping("/salaries/aide/new")
+    @GetMapping("/aide/new")
     public String newSalarie(ModelMap model) {
         model.put("salarie", new SalarieAideADomicile());
         return "new_Salarie";
@@ -72,10 +69,9 @@ public class SalarieController {
     // =======================
     // SAUVEGARDE
     // =======================
-    @PostMapping("/salaries/aide/save")
+    @PostMapping("/aide/save")
     public String addSalarie(@ModelAttribute SalarieAideADomicile salarie)
             throws SalarieException, EntityExistsException {
-
         salarieAideADomicileService.creerSalarieAideADomicile(salarie);
         return "redirect:/salaries/" + salarie.getId();
     }
@@ -83,10 +79,9 @@ public class SalarieController {
     // =======================
     // SUPPRESSION
     // =======================
-    @GetMapping("/salaries/{id}/delete")
+    @GetMapping("/{id}/delete")
     public String deleteSalarie(@PathVariable Long id)
             throws SalarieException, EntityExistsException {
-
         salarieAideADomicileService.deleteSalarieAideADomicile(id);
         return "redirect:/salaries";
     }
@@ -94,12 +89,10 @@ public class SalarieController {
     // =======================
     // MISE À JOUR
     // =======================
-    @PostMapping("/salaries/{id}")
-    public String updateSalarie(
-            @PathVariable Long id,
-            @ModelAttribute SalarieAideADomicile updatedSalarie)
+    @PostMapping("/{id}")
+    public String updateSalarie(@PathVariable Long id,
+                                @ModelAttribute SalarieAideADomicile updatedSalarie)
             throws SalarieException, EntityExistsException {
-
         salarieAideADomicileService.updateSalarieAideADomicile(updatedSalarie);
         return "redirect:/salaries/" + updatedSalarie.getId();
     }
