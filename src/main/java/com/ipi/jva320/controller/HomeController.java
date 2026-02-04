@@ -20,7 +20,7 @@ public class HomeController {
         model.put("nbSalaries", nbSalaries);
         return "home";
     }
-    @GetMapping("/salaries/{id}")
+    @GetMapping("@GetMapping(\"/home/salaries/{id}\")")
     public String getSalarieDetails(@PathVariable("id") Long id, ModelMap model) {
         SalarieAideADomicile salarieExistant = salarieAideADomicileService.getSalarie(id);
         model.put("salarie", salarieExistant);
