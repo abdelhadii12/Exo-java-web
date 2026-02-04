@@ -19,4 +19,14 @@ public class HomeController {
         Long nbSalaries = salarieAideADomicileService.countSalaries();
         model.put("nbSalaries", nbSalaries);
         return "home";
-    }}
+    }
+    @GetMapping("/salaries/{id}")
+    public String getSalarieDetails(@PathVariable("id") Long id, ModelMap model) {
+        SalarieAideADomicile salarieExistant = salarieAideADomicileService.getSalarie(id);
+        model.put("salarie", salarieExistant);
+        model.put("id", id);
+        model.put("nbSalaries", salarieAideADomicileService.countSalaries());
+
+        return "detail_Salarie";
+    }
+}
