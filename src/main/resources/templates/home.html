@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+
     <title>Aide à domicile RH - gestion des salariés</title>
     <link rel="stylesheet" href="./static/bootstrap.min.css">
     <link rel="stylesheet" href="./static/font-awesome.css">
@@ -17,7 +17,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li><a href="http://localhost:8080/salaries/1" class="nav-link">Liste des salariés <span class="badge badge-primary" th:text="${nbSalaries}"></span></a></li>
+                <li><a href="http://localhost:8080/salaries?page=0&amp;size=10&amp;sortProperty=id&amp;sortDirection=ASC" class="nav-link">Liste des salariés <span class="badge badge-primary" th:text="${nbSalaries}">26</span></a></li>
             </ul>
 
             <form class="form-inline my-2 my-lg-0" role="search" action="http://localhost:8080/salaries" method="GET">
@@ -32,10 +32,12 @@
 
 <div class="container mt-2">
     <div class="jumbotron">
-        <h1>Bienvenue dans l'interface d'administration RH ! <span th:text="${nbSalaries}"></span> <span th:text="#{msg.salarie}"></span></h1>
+        <h1> <span th:text="#{msg.welcome}">
+            </span>
+            (<span th:text="${nbSalaries}"></span>)</h1>
         <p>Voir dans <code>README.md</code> comment configurer la base de données de l'application, la lancer et afficher une page statique.</p>
         <p>Cette application est développée sous forme de Controllers Spring MVC et templates Thymeleaf. Les premiers sont à développer et les seconds à enrichir à partir des pages HTML existantes.</p>
-        <p/>
+
         <p>Fonctionnalités attendues pour l'application :</p>
         <ul class="list-group">
             <li class="list-group-item">
@@ -63,9 +65,9 @@
                 <p class="list-group-item-text">Dans le Controller, passer à la vue un salarié de test créé à la volée, par exemple par :</p>
                 <code>
                     SalarieAideADomicile aide = new SalarieAideADomicile("Jeannette Dupontelle",
-                        LocalDate.of(2021, 7, 1), LocalDate.now(),
-                        0, 0, 10,
-                        1, 0);
+                    LocalDate.of(2021, 7, 1), LocalDate.now(),
+                    0, 0, 10,
+                    1, 0);
                 </code>
                 <p class="list-group-item-text">et en afficher les données lors du rendu dynamique, en enrichissant la page detail_Salarie.html des bons attributs Thymeleaf (utiliser th:text...).</p>
                 <p class="list-group-item-text">Il est aussi possible de réaliser à la place directement l'étape "Afficher le détail des salariés créés".</p>
@@ -87,7 +89,7 @@
                 <h4 class="list-group-item-heading">Modification d'un salarié</h4>
                 <p class="list-group-item-text">En allant à <a href="http://localhost:8080/salaries/1">http://localhost:8080/salaries/1</a> (page de détail du salarié d'id 1), il est possible de modifier les informations du salarié d'identifiant 1 qui sont persistées en base de donnée lorsqu'on clique sur le bouton <em>Enregistrer</em>. L'URL qui est appelée est <code>POST /salaries/1</code> avec les données du formulaire qui sont envoyées (NB. en API REST ce serait un PUT mais il s'agit de Controllers de pages web).</p>
                 <p class="list-group-item-text">Développer ou enrichir le bon Controller pour réaliser cela, et côté web réutiliser detail_Salarie.html (comme le code du Controller et donc leurs URLs et les valeurs affichées dans le template HTML diffèrent dans les deux cas création et modification, il faut utiliser des expressions conditionnelles ternaires Thymeleaf pour supporter les deux à la fois). Une alternative permettant de se passer d'expressions conditionnelles ternaires Thymeleaf est de plutôt le copier vers new_Salarie.html.
-                Attention, le
+                    Attention, le
                 </p>
             </li>
             <li class="list-group-item">
@@ -128,17 +130,17 @@
                 <p class="list-group-item-text">rajouter le logo de thymeleaf (à prendre sur le site de thymeleaf) à gauche de la barre de navigation. Je vous laisse deviner l'attribut HTML à dynamiser par th.:</p>
                 <p class="list-group-item-text">rajouter un message internationalisé en anglais et français dans les fichiers messages(_fr).properties comme vu en cours :
                     <code>
-                    titre_logo=Thymeleaf logo
-                    titre_logo=logo de Thymeleaf
+                        titre_logo=Thymeleaf logo
+                        titre_logo=logo de Thymeleaf
                     </code>
                 </p>
                 <p class="list-group-item-text">rajouter au même élément HTML les attributs HTML title et alt dynamises en une seule fois magiquement ainsi:
                     th:alt-title="#{titre_logo}"</p>
                 <p class="list-group-item-text">tester les commentaires Thymeleaf en écrivant du code Thymeleaf qui fait exploser votre template (facile !), puis refaire marcher votre template en commentant ce code ainsi :
                     <code>
-                    <!--/*-->
-                    ...
-                    <!--*/-->
+                        <!--/*-->
+                        ...
+                        <!--*/-->
                     </code>
                 </p>
                 <p class="list-group-item-text">pour les experts, tester l'intérêt du preprocessing pour l'internationalisation avec un

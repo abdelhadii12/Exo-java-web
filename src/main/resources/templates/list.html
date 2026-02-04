@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Gestion des salariés</title>
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <link rel="stylesheet" href="/static/font-awesome.css">
@@ -10,17 +10,22 @@
 
 <div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="http://localhost:8080/">Gestion des salariés</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="/">Gestion des salariés</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li><a href="http://localhost:8080/salaries/1" class="nav-link">Liste des salariés <span class="badge badge-primary" th:text="${nbSalaries}"></span></a></li>
+        <li>
+          <a href="/salaries?page=0&size=10&sortProperty=nom&sortDirection=ASC" class="nav-link">
+            Liste des salariés <span class="badge badge-primary"></span>
+          </a>
+        </li>
       </ul>
 
-      <form class="form-inline my-2 my-lg-0" role="search" action="http://localhost:8080/salaries" method="GET">
+      <form class="form-inline my-2 my-lg-0" role="search" action="/salaries" method="GET">
         <div class="form-group">
           <input name="nom" class="form-control" placeholder="Rechercher un nom" type="text">
         </div>

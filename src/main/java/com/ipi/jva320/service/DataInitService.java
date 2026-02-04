@@ -7,9 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
-/**
- * Ajoute des données de test si vide au démarrage
- */
 @Component
 public class DataInitService implements CommandLineRunner {
 
@@ -17,14 +14,37 @@ public class DataInitService implements CommandLineRunner {
     private SalarieAideADomicileService salarieAideADomicileService;
 
     @Override
-    public void run(String... argv) throws Exception {
-        if (this.salarieAideADomicileService.countSalaries() != 0) {
+    public void run(String... args) {
+        if (salarieAideADomicileService.countSalaries() > 0) {
             return;
         }
 
-        SalarieAideADomicile s1 = this.salarieAideADomicileService.creerSalarieAideADomicile(
-                new SalarieAideADomicile("Jean", LocalDate.parse("2022-12-05"), LocalDate.parse("2022-12-05"),
-                        20, 0,
-                        80, 10, 1));
+        LocalDate date = LocalDate.of(2022, 12, 5);
+
+        salarieAideADomicileService.creerSalarieAideADomicile(
+                new SalarieAideADomicile(
+                        "Jean",
+                        date,
+                        date,
+                        20,
+                        0,
+                        80,
+                        10,
+                        1
+                )
+        );
+
+        salarieAideADomicileService.creerSalarieAideADomicile(
+                new SalarieAideADomicile(
+                        "Walid",
+                        date,
+                        date,
+                        20,
+                        0,
+                        80,
+                        10,
+                        1
+                )
+        );
     }
 }

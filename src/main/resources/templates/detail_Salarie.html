@@ -1,90 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Gestion des salariés</title>
-    <link rel="stylesheet" href="/static/bootstrap.min.css">
-    <link rel="stylesheet" href="./static/font-awesome.css">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/font-awesome.css">
 </head>
 <body>
 
 <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="http://localhost:8080/">Gestion des salariés</a>
+        <a class="navbar-brand" href="/">Gestion des salariés</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li><a href="http://localhost:8080/salaries/1" class="nav-link">Liste des salariés <span class="badge badge-primary" th:text="${nbSalaries}"></span></a></li>
+                <li><a href="http://localhost:8080/salaries?page=0&amp;size=10&amp;sortProperty=nom&amp;sortDirection=ASC" class="nav-link">Liste des salariés <span class="badge badge-primary" th:text="${nbSalaries}">26</span></a></li>
             </ul>
-
-            <form class="form-inline my-2 my-lg-0" role="search" action="http://localhost:8080/salaries" method="GET">
-                <div class="form-group form-inline">
-                    <input name="nom" class="form-control" placeholder="Rechercher un nom" type="text">
-                </div>
-                <button type="submit" class="btn btn-outline-success ml-2 my-2 my-sm-0">Rechercher</button>
-            </form>
         </div>
     </nav>
 </div>
 
 <div class="container">
-    <div th:text="#{msg.salarie}"></div><!-- TODO better messages example -->
+    <div class="alert alert-info mt-2" th:text="#{msg.salarie}">Détail salarié</div>
 
-    <h2>Détail du salarié</h2>
-    
-    <form id="saveForm" action="http://localhost:8080/salaries/aide/10" method="post" class="row">
+    <h2>Détail du salarié n° <span th:text="${id}">10</span></h2>
+
+    <!-- Ce formulaire envoie, via la méthode POST, les informations du salarié vers l’URL associée à son identifiant  -->
+    <form id="saveForm" th:action="@{/salaries/{id}(id=${salarie.id})}" method="post" class="row">
 
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="form-control-label" for="id">ID</label>
-                <input type="text" th:value="${infoSalarie.id}" class="form-control" name="id" id="id" disabled="true">
+                <input type="text" th:value="${salarie.id}" class="form-control" name="id" id="id" disabled="true" >
 
                 <label class="form-control-label" for="nom">Nom</label>
-                <input type="text" th:value="${infoSalarie.nom}" class="form-control" name="nom" id="nom">
+                <input type="text" th:value="${salarie.nom}" class="form-control" name="nom" id="nom">
 
                 <label class="form-control-label" for="moisEnCours">moisEnCours</label>
-                <input type="date" th:value="${infoSalarie.moisEnCours}" class="form-control" name="moisEnCours"
-                       id="moisEnCours">
+                <input type="date" th:value="${salarie.moisEnCours}" class="form-control" name="moisEnCours" id="moisEnCours">
 
                 <label class="form-control-label" for="moisDebutContrat">moisDebutContrat</label>
-                <input type="date" th:value="${infoSalarie.moisDebutContrat}" class="form-control" name="moisDebutContrat" id="moisDebutContrat">
+                <input type="date" th:value="${salarie.moisDebutContrat}" class="form-control" name="moisDebutContrat" id="moisDebutContrat">
             </div>
         </div>
 
         <div class="col-lg-6">
             <div class="form-group">
-
                 <div>
-                    <label class="form-control-label" for="joursTravaillesAnneeN">joursTravaillesAnneeN</label>
-                    <div class="input-group">
-                        <input type="number" step="0.5" th:value="${infoSalarie.joursTravaillesAnneeNMoins1}" class="form-control" name="joursTravaillesAnneeN" id="joursTravaillesAnneeN">
-                        <div class="input-group-append">
-                            <span class="input-group-text">j</span>
-                        </div>
-                    </div>
+                    <label class="form-control-label">joursTravaillesAnneeN</label>
+                    <input type="number" step="0.5" th:value="${salarie.joursTravaillesAnneeN}" class="form-control" name="joursTravaillesAnneeN" id="joursTravaillesAnneeN">
                 </div>
 
                 <div>
-                    <label class="form-control-label" for="congesPayesAcquisAnneeN">congesPayesAcquisAnneeN</label>
-                    <div class="input-group">
-                        <input type="number" step="0.5" th:value="${infoSalarie.congesPayesAcquisAnneeNMoins1}" class="form-control" name="congesPayesAcquisAnneeN" id="congesPayesAcquisAnneeN">
-                    <div class="input-group-append">
-                        <span class="input-group-text">j</span>
-                    </div>
+                    <label class="form-control-label">congesPayesAcquisAnneeN</label>
+                    <input type="number" step="0.5" th:value="${salarie.congesPayesAcquisAnneeN}" class="form-control">
                 </div>
-            </div>
             </div>
         </div>
-        
 
         <div class="col-lg-6">
             <div>
                 <label class="form-control-label" for="joursTravaillesAnneeNMoins1">joursTravaillesAnneeNMoins1</label>
                 <div class="input-group">
-                    <input type="number" step="0.5" value="80" class="form-control" name="joursTravaillesAnneeNMoins1" id="joursTravaillesAnneeNMoins1">
+                    <input type="number" step="0.5" th:value="${salarie.congesPayesAcquisAnneeN}" class="form-control" name="congesPayesAcquisAnneeN" id="congesPayesAcquisAnneeN">
                     <div class="input-group-append">
                         <span class="input-group-text">j</span>
                     </div>
@@ -94,48 +75,28 @@
             <div>
                 <label class="form-control-label" for="congesPayesAcquisAnneeNMoins1">congesPayesAcquisAnneeNMoins1</label>
                 <div class="input-group">
-                    <input type="number" step="0.5" value="10" class="form-control" name="congesPayesAcquisAnneeNMoins1" id="congesPayesAcquisAnneeNMoins1">
-                    <div class="input-group-append">
-                        <span class="input-group-text">j</span>
-                    </div>
+                    <input type="number" step="0.5" th:value="${salarie.congesPayesAcquisAnneeNMoins1}" class="form-control" name="congesPayesAcquisAnneeNMoins1" id="congesPayesAcquisAnneeNMoins1">
+                    <div class="input-group-append"><span class="input-group-text">j</span></div>
                 </div>
             </div>
 
             <div>
-                <label class="form-control-label" for="congesPayesPrisAnneeNMoins1">congesPayesPrisAnneeNMoins1</label>
+                <label class="form-control-label" for="congesPayesAcquisAnneeNMoins1">congesPayesAcquisAnneeNMoins1</label>
                 <div class="input-group">
-                    <input type="number" step="0.5" value="4" class="form-control" name="congesPayesPrisAnneeNMoins1" id="congesPayesPrisAnneeNMoins1">
-                    <div class="input-group-append">
-                        <span class="input-group-text">j</span>
-                    </div>
+                    <input type="number" step="0.5" th:value="${salarie.congesPayesAcquisAnneeNMoins1}" class="form-control" name="congesPayesAcquisAnneeNMoins1" id="congesPayesAcquisAnneeNMoins2">
+                    <div class="input-group-append"><span class="input-group-text">j</span></div>
                 </div>
             </div>
         </div>
-
-        
     </form>
-    
-    <div class="row">
-        <div class="col-lg-6">
-            <ul class="list-group list-unstyled">
-                <li class="alert alert-danger" role="alert">Erreur dans un champ !</li>
-            </ul>
-        </div>
-    </div>
-    <div class="row mt-2">
+
+    <div class="row mt-3">
         <div class="col-lg-6">
             <input form="saveForm" class="btn btn-primary" type="submit" value="Enregistrer">
-            <a href="/salaries/10/delete" class="btn btn-danger">Supprimer</a>
+            <a th:href="|/salaries/${id}/delete|" class="btn btn-danger">Supprimer</a>
         </div>
-    </div>
-
-    <div class="row">
-    <table>
-        <tr><td class="alert alert-danger" role="alert">Erreur de type de données !</td></tr>
-    </table>
-    <div>Erreur globale spécifique !</div>
     </div>
 </div>
 
-
-</body></html>
+</body>
+</html>
